@@ -1,0 +1,23 @@
+application:
+  title: 'Attornatus People'
+  version: '0.0.1-SNAPSHOT'
+  company: 'Attornatus'
+  author: 'Mauricio Mityo Hidani'
+  since: 'February 16, 2023'
+
+server:
+  port: 9001
+
+spring:
+  profiles:
+    active: 'dev'
+  application:
+    name: 'people-attornatus'
+  datasource:
+    url: 'jdbc:h2:mem:attornatus_db'
+    username: 'sa'
+    password:
+  h2:
+    console:
+      enabled: true
+      path: '/h2-console'
