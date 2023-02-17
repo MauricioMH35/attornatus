@@ -1,5 +1,6 @@
 package br.com.attornatus.models.entities;
 
+import br.com.attornatus.models.enums.AddressRelevanceLevel;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -20,6 +21,10 @@ public class Address implements Serializable {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private final Long id;
 
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private final AddressRelevanceLevel relevanceLevel;
+
     @Column(nullable = false, length = 128)
     private final String publicPlace;
 
@@ -38,6 +43,7 @@ public class Address implements Serializable {
 
     private Address() {
         this.id = null;
+        this.relevanceLevel = null;
         this.publicPlace = null;
         this.zipCode = null;
         this.number = null;
