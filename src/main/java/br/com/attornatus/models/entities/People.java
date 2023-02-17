@@ -31,14 +31,10 @@ public class People implements Serializable {
     @Column(columnDefinition = "DATE")
     private final LocalDate birth;
 
-    @OneToMany(mappedBy = "people", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Address> addresses;
-
     private People() {
         this.id = null;
         this.name = null;
         this.birth = null;
-        this.addresses = null;
     }
 
 }
