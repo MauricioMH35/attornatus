@@ -12,11 +12,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AddressRepository extends JpaRepository<Address, Long> {
 
-    @Query("SELECT a FROM Address a WHERE a.people.id = ?1")
-    Page<Address> findByPeopleId(@Param("peopleId") Long peopleId, Pageable pageable);
+    @Query("SELECT a FROM Address a WHERE a.person.id = ?1")
+    Page<Address> findByPeopleId(@Param("personId") Long personId, Pageable pageable);
 
-    @Query("SELECT a FROM Address a WHERE a.people.id = ?1 AND a.relevanceLevel = 'HIGH'")
-    Address findHighRelevanceLevelByPeopleId(@Param("peopleId") Long peopleId);
+    @Query("SELECT a FROM Address a WHERE a.person.id = ?1 AND a.relevanceLevel = 'HIGH'")
+    Address findHighRelevanceLevelByPeopleId(@Param("personId") Long personId);
 
     Page<Address> findByRelevanceLevel(AddressRelevanceLevel relevanceLevel, Pageable pageable);
 
