@@ -38,8 +38,8 @@ public class Address implements Serializable {
     private final String city;
 
     @ManyToOne
-    @JoinColumn(name = "people_id", referencedColumnName = "id")
-    private People people;
+    @JoinColumn(name = "person_id", referencedColumnName = "id")
+    private Person person;
 
     private Address() {
         this.id = null;
@@ -48,7 +48,7 @@ public class Address implements Serializable {
         this.zipCode = null;
         this.number = null;
         this.city = null;
-        this.people = null;
+        this.person = null;
     }
 
 }
