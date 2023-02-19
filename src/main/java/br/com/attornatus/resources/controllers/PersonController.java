@@ -9,6 +9,7 @@ import br.com.attornatus.resources.hateoas.processors.PersonSaveProcessorHyperMe
 import br.com.attornatus.resources.services.PersonServiceFindAll;
 import br.com.attornatus.resources.services.PersonServiceFindById;
 import br.com.attornatus.resources.services.PersonServiceSave;
+import br.com.attornatus.resources.services.impls.PersonServiceFindByBirthImpl;
 import br.com.attornatus.resources.services.impls.PersonServiceFindByNameContainsImpl;
 import br.com.attornatus.utils.LocalDateUtility;
 import lombok.RequiredArgsConstructor;
@@ -40,6 +41,7 @@ public class PersonController {
     private final PersonServiceFindAll serviceFindAll;
     private final PersonServiceFindById serviceFindById;
     private final PersonServiceFindByNameContainsImpl serviceFindByNameContains;
+    private final PersonServiceFindByBirthImpl serviceFinByBirth;
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<PersonModel> save(@RequestBody Person person) {
@@ -80,11 +82,12 @@ public class PersonController {
 
     @GetMapping(path = "/birth/{birth}", produces = "application/hal+json")
     public ResponseEntity<CollectionModel<PersonModel>> findByBirth(@PathVariable String birth,
-                                                                    @RequestParam Map<String, String> params) {
-        Integer page = Integer.parseInt(params.get("page"));
-        Integer pageSize = Integer.parseInt(params.get("size"));
-        LocalDate birthConverted = localDateUtil.parseLocalDate(birth);
-        return null;
+                                                                    @RequestParam Map<String, String> pageParams) {
+        Page<Person> founded = serviceFinByBirth.apply(birth, pageParams);
+
+        CollectionModel<PersonModel> models = hateoasAssembler.toCollectionModel(founded.toList());
+        collectionProcessorHyperMedia.process(models);
+        return ResponseEntity.ok(models);
     }
 
     @GetMapping(path = "/birth/between", produces = "application/hap+json")
