@@ -37,4 +37,14 @@ class PersonServiceFindByIdImplTest {
                 .hasMessageContaining(exceptionMessage);
     }
 
+    @Test
+    @DisplayName("When Find By Id Person With Id Less Than One Should Throw An IllegalArgumentException")
+    void whenFindByIdLessThanOne() {
+        final Long id = -1l;
+        final String exceptionMessage = "Para realizar essa operação o id da pessoa deve ser maior do que um.";
+        assertThatThrownBy(() -> underTest.apply(id))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining(exceptionMessage);
+    }
+
 }
