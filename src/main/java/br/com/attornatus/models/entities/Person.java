@@ -16,7 +16,7 @@ import java.time.LocalDate;
 @EqualsAndHashCode
 @Entity
 @DynamicUpdate
-@Table(name = "TB_PEOPLE")
+@Table(name = "TB_PERSONS")
 public class Person implements Serializable {
 
     private static final long serialVersionUID = 1l;
