@@ -32,8 +32,11 @@ public class PersonController {
     private final LocalDateUtility localDateUtil;
     private final PersonHateoasAssembler hateoasAssembler;
     private final PersonSaveProcessorHyperMedia saveProcessorHyperMedia;
+    private final PersonModelProcessorHyperMedia modelProcessorHyperMedia;
+    private final PersonCollectionProcessorHyperMedia collectionProcessorHyperMedia;
 
     @Qualifier("personServiceSaveImpl") private final PersonServiceSave serviceSave;
+    @Qualifier("personServiceFindAllImpl") private final PersonServiceFindAll serviceFindAll;
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<PersonModel> save(@RequestBody Person person) {
@@ -42,6 +45,15 @@ public class PersonController {
         PersonModel model = hateoasAssembler.toModel(saved);
         model = saveProcessorHyperMedia.process(model);
         return ResponseEntity.ok(model);
+    }
+
+    @GetMapping(produces = "application/hal+json")
+    public ResponseEntity<CollectionModel<PersonModel>> findAll(@RequestParam Map<String, String> pageParams) {
+        Page<Person> founded = serviceFindAll.apply(pageParams);
+
+        CollectionModel<PersonModel> models = hateoasAssembler.toCollectionModel(founded.toList());
+        collectionProcessorHyperMedia.process(models);
+        return ResponseEntity.ok(models);
     }
 
 }
