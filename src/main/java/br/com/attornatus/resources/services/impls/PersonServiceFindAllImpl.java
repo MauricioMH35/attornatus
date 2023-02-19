@@ -4,6 +4,7 @@ import br.com.attornatus.exceptions.NotFoundException;
 import br.com.attornatus.models.entities.Person;
 import br.com.attornatus.models.repositories.PersonRepository;
 import br.com.attornatus.resources.services.PersonServiceFindAll;
+import br.com.attornatus.resources.services.utils.PageableServiceUtil;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,10 +33,10 @@ public class PersonServiceFindAllImpl implements PersonServiceFindAll {
     }
 
     private Pageable parsePageable(Map<String, String> pageParams) {
-        throwsExceptionWhenFieldsAreNotFound(pageParams);
-        throwsExceptionWhenFieldsAreBlank(pageParams);
-        throwsExceptionWhenPageFieldAreNotNumbers(pageParams);
-        throwsExceptionWhenFieldsAreLessThanZero(pageParams);
+        exceptionFieldsAreNotFound(pageParams);
+        exceptionFieldsAreBlank(pageParams);
+        exceptionFieldAreNotNumbers(pageParams);
+        exceptionFieldsAreLessThanZero(pageParams);
 
         Integer page = Integer.parseInt(pageParams.get("page"));
         Integer size = Integer.parseInt(pageParams.get("size"));
@@ -53,54 +54,49 @@ public class PersonServiceFindAllImpl implements PersonServiceFindAll {
         }
     }
 
-    private void throwsExceptionWhenFieldsAreNotFound(Map<String, String> pageParams) {
-        boolean noExistsPageKey = !pageParams.containsKey("page");
-        boolean noExistsSizeKey = !pageParams.containsKey("size");
-
-        if (noExistsPageKey || noExistsSizeKey) {
-            log.error("Uma tentativa de consulta foi realizada para listar as pessoas cadastradas, mas não foram " +
-                    "informados os parêmtros `page` e `size` para realizar a operação.");
-
-            throw new IllegalArgumentException("Não é possivel realizar a operação, os parâmetros informados não são válidos.");
-        }
+    private void exceptionFieldsAreNotFound(Map<String, String> pageParams) {
+        PageableServiceUtil.builder()
+                .log(log)
+                .logMessage("Uma tentativa de consulta foi realizada para listar as pessoas cadastradas, " +
+                        "mas não foram informados os parêmtros `page` e `size` para realizar a operação.")
+                .throwMessage("Não é possivel realizar a operação, os parâmetros informados não são " +
+                        "válidos.")
+                .build()
+                .exceptionFieldsAreNotFound(pageParams);
     }
 
-    private void throwsExceptionWhenFieldsAreBlank(Map<String, String> pageParams) {
-        boolean isNullPageParam = pageParams.get("page") == "";
-        boolean isNullSizeParam = pageParams.get("size") == "";
-
-        if (isNullPageParam || isNullSizeParam) {
-            log.error("Uma tentativa de consulta foid realizada para listar as pessoas cadastradas, mas não foi " +
-                    "possivel realizar a operação devido ter sido informado os parêmtros `page` e `size` com valores " +
-                    "em branco.");
-
-            throw new IllegalArgumentException("Não é possivel realizar a operação, os parâmetros informados não são válidos.");
-        }
+    private void exceptionFieldsAreBlank(Map<String, String> pageParams) {
+        PageableServiceUtil.builder()
+                .log(log)
+                .logMessage("Uma tentativa de consulta foid realizada para listar as pessoas cadastradas, " +
+                        "mas não foi possivel realizar a operação devido ter sido informado os parêmtros `page` e " +
+                        "`size` com valores em branco.")
+                .throwMessage("Não é possivel realizar a operação, os parâmetros informados não são " +
+                        "válidos.")
+                .build()
+                .exceptionFieldsAreBlank(pageParams);
     }
 
-    private void throwsExceptionWhenPageFieldAreNotNumbers(Map<String, String> pageParams) {
-        boolean isPageNotNumeric = !checkFieldIsNumeric(pageParams.get("page"));
-        boolean isSizeNotNumeric = !checkFieldIsNumeric(pageParams.get("size"));
-
-        if (isPageNotNumeric || isSizeNotNumeric) {
-            log.error("Uma tentativa de consulta foid realizada para listar as pessoas cadastradas, mas os parâmetros " +
-                    "informados `page` e `size` não são valores numéricos.");
-
-            throw new IllegalArgumentException("Não é possivel realizar a operação, os parâmetros `page` e `size` não " +
-                    "são valores numéricos.");
-        }
+    private void exceptionFieldAreNotNumbers(Map<String, String> pageParams) {
+        PageableServiceUtil.builder()
+                .log(log)
+                .logMessage("Uma tentativa de consulta foid realizada para listar as pessoas cadastradas, " +
+                        "mas os parâmetros informados `page` e `size` não são valores numéricos.")
+                .throwMessage("Não é possivel realizar a operação, os parâmetros `page` e `size` não " +
+                        "são valores numéricos.")
+                .build()
+                .exceptionFieldAreNotNumbers(pageParams);
     }
 
-    private void throwsExceptionWhenFieldsAreLessThanZero(Map<String, String> pageParams) {
-        boolean isPageLessThanZero = Integer.parseInt(pageParams.get("page")) < 0;
-        boolean isSizeLessThanZero = Integer.parseInt(pageParams.get("size")) < 0;
-
-        if (isPageLessThanZero || isSizeLessThanZero) {
-            log.error("Uma tentativa de consulta para organizar a paginação do resulta com valores menores do que zero " +
-                    "realizada.");
-            throw new IllegalArgumentException("Não é possivel realizar a operação com os parâmetros informados sendo " +
-                    "menores do que zero.");
-        }
+    private void exceptionFieldsAreLessThanZero(Map<String, String> pageParams) {
+        PageableServiceUtil.builder()
+                .log(log)
+                .logMessage("Uma tentativa de consulta para organizar a paginação do resulta com valores " +
+                        "menores do que zero realizada.")
+                .throwMessage("Não é possivel realizar a operação com os parâmetros informados sendo " +
+                        "menores do que zero.")
+                .build()
+                .exceptionFieldsAreLessThanZero(pageParams);
     }
 
     private void throwsExceptionWhenNotFound(Page<Person> founded) {
