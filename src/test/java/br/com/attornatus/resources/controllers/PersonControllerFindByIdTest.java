@@ -1,6 +1,8 @@
 package br.com.attornatus.resources.controllers;
 
 import br.com.attornatus.exceptions.NotFoundException;
+import br.com.attornatus.models.entities.Person;
+import br.com.attornatus.models.utils.PersonUtil;
 import br.com.attornatus.resources.services.impls.PersonServiceFindByIdImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -32,6 +34,25 @@ public class PersonControllerFindByIdTest {
 
     @BeforeEach void setUp() {
 
+    }
+
+    @Test
+    @DisplayName("When Find By Id Person Should Return Person Founded")
+    void whenFindByIdReturnPersonFounded() throws Exception {
+        final Long id = 1l;
+        final Person founded = PersonUtil.newEntity();
+        when(serviceFindById.apply(id)).thenReturn(founded);
+
+        mvc.perform(get("/v1/api/people/"+id)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .accept(MediaType.APPLICATION_JSON)
+                )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect((jsonPath("$.content.id").value(1l)))
+                .andExpect((jsonPath("$.content.name").value("Flavia Matos")))
+                .andExpect((jsonPath("$.content.birth").value("1990-08-23")));
     }
 
     @Test
