@@ -25,7 +25,10 @@ public class PersonServiceFindByNameContainsImpl implements PersonServiceFindByN
     @Override
     public Page<Person> apply(String name, Map<String, String> pageParams) {
         Pageable pageable = parsePageable(pageParams);
-        return null;
+
+        Page<Person> founded = repository.findByNameContains(name, pageable);
+        throwsExceptionWhenNotFoundByName(founded, name);
+        return founded;
     }
 
     private Pageable parsePageable(Map<String, String> pageParams) {
@@ -97,6 +100,15 @@ public class PersonServiceFindByNameContainsImpl implements PersonServiceFindByN
                     "realizada.");
             throw new IllegalArgumentException("Não é possivel realizar a operação com os parâmetros informados sendo " +
                     "menores do que zero.");
+        }
+    }
+
+    private void throwsExceptionWhenNotFoundByName(Page<Person> founded, String name) {
+        if (founded.isEmpty()) {
+            log.warn("Uma tentativa de consulta para listar as pessoas que contenha o nome (" + name + ") cadastradas " +
+                    "no sistema foi realizada, mas não foram encontrados registros.");
+
+            throw new NotFoundException("Não foram encontadas pessoas cadastradas com o nome (" + name + ") informado.");
         }
     }
 
