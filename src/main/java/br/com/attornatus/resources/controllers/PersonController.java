@@ -15,7 +15,6 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.MediaType;
@@ -37,10 +36,10 @@ public class PersonController {
     private final PersonModelProcessorHyperMedia modelProcessorHyperMedia;
     private final PersonCollectionProcessorHyperMedia collectionProcessorHyperMedia;
 
-    @Qualifier("personServiceSaveImpl") private final PersonServiceSave serviceSave;
-    @Qualifier("personServiceFindAllImpl") private final PersonServiceFindAll serviceFindAll;
-    @Qualifier("personServiceFindByIdImpl") private final PersonServiceFindById serviceFindById;
-    @Qualifier("personServiceFindByNameContains") private final PersonServiceFindByNameContainsImpl serviceFindByNameContains;
+    private final PersonServiceSave serviceSave;
+    private final PersonServiceFindAll serviceFindAll;
+    private final PersonServiceFindById serviceFindById;
+    private final PersonServiceFindByNameContainsImpl serviceFindByNameContains;
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<PersonModel> save(@RequestBody Person person) {
