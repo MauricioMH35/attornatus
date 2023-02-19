@@ -1,5 +1,6 @@
 package br.com.attornatus.resources.controllers;
 
+import br.com.attornatus.exceptions.NotFoundException;
 import br.com.attornatus.models.entities.Person;
 import br.com.attornatus.models.utils.PersonUtil;
 import br.com.attornatus.resources.services.impls.PersonServiceFindByNameContainsImpl;
@@ -142,5 +143,21 @@ public class PersonControllerFindByNameContainsTest {
                 .andExpect((jsonPath("$.message").value(exceptionMessage)));
     }
 
+    @Test
+    @DisplayName("When Find By Name Contains Persons With Not Found Should Not Found")
+    void whenNotFoundPersons() throws Exception {
+        final String name = "Flavia";
+        final Map<String, String> pageParams = Map.of("page", "0", "size", "10");
+        final String exceptionMessage = "Não foram encontadas pessoas cadastradas.";
+        when(serviceFindByNameContains.apply(name, pageParams)).thenThrow(new NotFoundException(exceptionMessage));
+
+        mvc.perform(get("/v1/api/people/name/"+name+"?page=0&size=10")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isNotFound())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.status").value("NOT_FOUND"))
+                .andExpect((jsonPath("$.message").value(exceptionMessage)));
+    }
 
 }
