@@ -6,11 +6,7 @@ import br.com.attornatus.resources.hateoas.models.PersonModel;
 import br.com.attornatus.resources.hateoas.processors.PersonCollectionProcessorHyperMedia;
 import br.com.attornatus.resources.hateoas.processors.PersonModelProcessorHyperMedia;
 import br.com.attornatus.resources.hateoas.processors.PersonSaveProcessorHyperMedia;
-import br.com.attornatus.resources.services.PersonServiceFindAll;
-import br.com.attornatus.resources.services.PersonServiceFindByBirth;
-import br.com.attornatus.resources.services.PersonServiceFindById;
-import br.com.attornatus.resources.services.PersonServiceSave;
-import br.com.attornatus.resources.services.impls.PersonServiceFindByNameContainsImpl;
+import br.com.attornatus.resources.services.*;
 import br.com.attornatus.utils.LocalDateUtility;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -40,7 +36,7 @@ public class PersonController {
     private final PersonServiceSave serviceSave;
     private final PersonServiceFindAll serviceFindAll;
     private final PersonServiceFindById serviceFindById;
-    private final PersonServiceFindByNameContainsImpl serviceFindByNameContains;
+    private final PersonServiceFindByNameContains serviceFindByNameContains;
     private final PersonServiceFindByBirth serviceFindByBirth;
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
