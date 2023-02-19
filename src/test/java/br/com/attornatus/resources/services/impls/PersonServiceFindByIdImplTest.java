@@ -1,5 +1,6 @@
 package br.com.attornatus.resources.services.impls;
 
+import br.com.attornatus.exceptions.NotFoundException;
 import br.com.attornatus.models.entities.Person;
 import br.com.attornatus.models.repositories.PersonRepository;
 import br.com.attornatus.models.utils.PersonUtil;
@@ -57,6 +58,18 @@ class PersonServiceFindByIdImplTest {
         final String exceptionMessage = "Para realizar essa operação o id da pessoa deve ser maior do que um.";
         assertThatThrownBy(() -> underTest.apply(id))
                 .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining(exceptionMessage);
+    }
+
+    @Test
+    @DisplayName("When Find By Id Person But Not Found In Database Must Throw An NotFoundException")
+    void whenFindByIdNotFound() {
+        final Long id = 1l;
+        final String exceptionMessage = "Não foi possivel encontrar a pessoa com o id (" + id + ") informado.";
+        when(repository.findById(id)).thenReturn(Optional.empty());
+
+        assertThatThrownBy(() -> underTest.apply(id))
+                .isInstanceOf(NotFoundException.class)
                 .hasMessageContaining(exceptionMessage);
     }
 
