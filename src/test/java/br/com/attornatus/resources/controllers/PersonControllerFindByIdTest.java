@@ -1,5 +1,6 @@
 package br.com.attornatus.resources.controllers;
 
+import br.com.attornatus.exceptions.NotFoundException;
 import br.com.attornatus.resources.services.impls.PersonServiceFindByIdImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -12,6 +13,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.Optional;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -46,6 +49,24 @@ public class PersonControllerFindByIdTest {
                 .andExpect(status().isBadRequest())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(jsonPath("$.status").value("BAD_REQUEST"))
+                .andExpect((jsonPath("$.message").value(exceptionMessage)));
+    }
+
+    @Test
+    @DisplayName("When Find By Id Person But Not Found In Database Must Not Found")
+    void whenFindByIdNotFound() throws Exception {
+        final Long id = 1l;
+        final String exceptionMessage = "Não foi possivel encontrar a pessoa com o id (" + id + ") informado.";
+        when(serviceFindById.apply(id)).thenThrow(new NotFoundException(exceptionMessage));
+
+        mvc.perform(get("/v1/api/people/"+id)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .accept(MediaType.APPLICATION_JSON)
+                )
+                .andDo(print())
+                .andExpect(status().isNotFound())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(jsonPath("$.status").value("NOT_FOUND"))
                 .andExpect((jsonPath("$.message").value(exceptionMessage)));
     }
 
