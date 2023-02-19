@@ -6,7 +6,7 @@ import br.com.attornatus.resources.hateoas.models.PersonModel;
 import br.com.attornatus.resources.hateoas.processors.PersonCollectionProcessorHyperMedia;
 import br.com.attornatus.resources.hateoas.processors.PersonModelProcessorHyperMedia;
 import br.com.attornatus.resources.hateoas.processors.PersonSaveProcessorHyperMedia;
-import br.com.attornatus.resources.services.*;
+import br.com.attornatus.resources.services.PersonService;
 import br.com.attornatus.utils.LocalDateUtility;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -33,15 +33,11 @@ public class PersonController {
     private final PersonModelProcessorHyperMedia modelProcessorHyperMedia;
     private final PersonCollectionProcessorHyperMedia collectionProcessorHyperMedia;
 
-    private final PersonServiceSave serviceSave;
-    private final PersonServiceFindAll serviceFindAll;
-    private final PersonServiceFindById serviceFindById;
-    private final PersonServiceFindByNameContains serviceFindByNameContains;
-    private final PersonServiceFindByBirth serviceFindByBirth;
+    private final PersonService service;
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<PersonModel> save(@RequestBody Person person) {
-        Person saved = serviceSave.apply(person);
+        Person saved = service.save(person);
 
         PersonModel model = hateoasAssembler.toModel(saved);
         model = saveProcessorHyperMedia.process(model);
@@ -50,7 +46,7 @@ public class PersonController {
 
     @GetMapping(produces = "application/hal+json")
     public ResponseEntity<CollectionModel<PersonModel>> findAll(@RequestParam Map<String, String> pageParams) {
-        Page<Person> founded = serviceFindAll.apply(pageParams);
+        Page<Person> founded = service.findAll(pageParams);
 
         CollectionModel<PersonModel> models = hateoasAssembler.toCollectionModel(founded.toList());
         collectionProcessorHyperMedia.process(models);
@@ -59,7 +55,7 @@ public class PersonController {
 
     @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<PersonModel> findById(@PathVariable Long id) {
-        Person founded = serviceFindById.apply(id);
+        Person founded = service.findById(id);
 
         PersonModel model = hateoasAssembler.toModel(founded);
         model = modelProcessorHyperMedia.process(model);
@@ -69,7 +65,7 @@ public class PersonController {
     @GetMapping(path = "/name/{name}", produces = "application/hal+json")
     public ResponseEntity<CollectionModel<PersonModel>> findByNameContains(@PathVariable String name,
                                                                            @RequestParam Map<String, String> pageParams) {
-        Page<Person> founded = serviceFindByNameContains.apply(name, pageParams);
+        Page<Person> founded = service.findByNameContains(name, pageParams);
 
         CollectionModel<PersonModel> models = hateoasAssembler.toCollectionModel(founded.toList());
         collectionProcessorHyperMedia.process(models);
@@ -79,7 +75,7 @@ public class PersonController {
     @GetMapping(path = "/birth/{birth}", produces = "application/hal+json")
     public ResponseEntity<CollectionModel<PersonModel>> findByBirth(@PathVariable String birth,
                                                                     @RequestParam Map<String, String> pageParams) {
-        Page<Person> founded = serviceFindByBirth.apply(birth, pageParams);
+        Page<Person> founded = service.findByBirth(birth, pageParams);
 
         CollectionModel<PersonModel> models = hateoasAssembler.toCollectionModel(founded.toList());
         collectionProcessorHyperMedia.process(models);
