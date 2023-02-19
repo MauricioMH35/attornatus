@@ -112,5 +112,4 @@ public class PersonServiceFindAllImpl implements PersonServiceFindAll {
         }
     }
 
-
 }
