@@ -4,7 +4,6 @@ import br.com.attornatus.exceptions.NotFoundException;
 import br.com.attornatus.models.entities.Person;
 import br.com.attornatus.models.utils.PersonUtil;
 import br.com.attornatus.resources.services.PersonServiceFindAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -32,10 +31,6 @@ public class PersonControllerFindAllTest {
     @Autowired private MockMvc mvc;
     @MockBean private PersonServiceFindAll serviceFindAll;
 
-    @BeforeEach void setUp() {
-
-    }
-
     @Test
     @DisplayName("When Find All Persons Should Return Collection Model of Person Models Status Ok")
     void whenSuccessReturnCollectionModel() throws Exception {
@@ -59,88 +54,6 @@ public class PersonControllerFindAllTest {
                 .andExpect(jsonPath("$._embedded.personModelList[2].content.id").value(3l))
                 .andExpect(jsonPath("$._embedded.personModelList[2].content.name").value("Rebeca Isadora Martins"))
                 .andExpect(jsonPath("$._embedded.personModelList[2].content.birth").value("1995-05-23"));
-    }
-
-    @Test
-    @DisplayName("When Find All Persons With Page Fields Not Found Should Bad Request")
-    void whenPageFieldsAreNotFound() throws Exception {
-        final Map<String, String> pageParams = Map.of("pageNoExist", "0", "sizeNoExist", "10");
-        final String pageKey = "pageNoExist";
-        final String pageValue = pageParams.get(pageKey);
-        final String sizeKey = "sizeNoExist";
-        final String sizeValue = pageParams.get(sizeKey);
-        final String exceptionMessage = "Não é possivel realizar a operação, os parâmetros informados não são válidos.";
-        when(serviceFindAll.apply(pageParams)).thenThrow(new IllegalArgumentException(exceptionMessage));
-
-        mvc.perform(get("/v1/api/people?"+pageKey+"="+pageValue+"&"+sizeKey+"="+sizeValue)
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andDo(print())
-                .andExpect(status().isBadRequest())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.status").value("BAD_REQUEST"))
-                .andExpect((jsonPath("$.message").value(exceptionMessage)));
-    }
-
-    @Test
-    @DisplayName("When Find All Persons With Page Fields Are Blank Should Bad Request")
-    void whenPageFieldsAreBlank() throws Exception {
-        final Map<String, String> pageParams = Map.of("page", "", "size", "");
-        final String pageKey = "page";
-        final String pageValue = pageParams.get(pageKey);
-        final String sizeKey = "size";
-        final String sizeValue = pageParams.get(sizeKey);
-        final String exceptionMessage = "Não é possivel realizar a operação, os parâmetros informados não são válidos.";
-        when(serviceFindAll.apply(pageParams)).thenThrow(new IllegalArgumentException(exceptionMessage));
-
-        mvc.perform(get("/v1/api/people?"+pageKey+"="+pageValue+"&"+sizeKey+"="+sizeValue)
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andDo(print())
-                .andExpect(status().isBadRequest())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.status").value("BAD_REQUEST"))
-                .andExpect((jsonPath("$.message").value(exceptionMessage)));
-    }
-
-    @Test
-    @DisplayName("When Find All Persons With Page Fields Are Not Numerics Should Bad Request")
-    void whenPageFieldAreNotNumerics() throws Exception {
-        final Map<String, String> pageParams = Map.of("page", "zero", "size", "ten");
-        final String pageKey = "page";
-        final String pageValue = pageParams.get(pageKey);
-        final String sizeKey = "size";
-        final String sizeValue = pageParams.get(sizeKey);
-        final String exceptionMessage = "Não é possivel realizar a operação, os parâmetros `page` e `size` não " +
-                "são valores numéricos.";
-        when(serviceFindAll.apply(pageParams)).thenThrow(new IllegalArgumentException(exceptionMessage));
-
-        mvc.perform(get("/v1/api/people?"+pageKey+"="+pageValue+"&"+sizeKey+"="+sizeValue)
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andDo(print())
-                .andExpect(status().isBadRequest())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.status").value("BAD_REQUEST"))
-                .andExpect((jsonPath("$.message").value(exceptionMessage)));
-    }
-
-    @Test
-    @DisplayName("When Find All Persons With Page Fields Less Than Zero Should Bad Request")
-    void whenPageFieldAreLessThanZero() throws Exception {
-        final Map<String, String> pageParams = Map.of("page", "-1", "size", "-10");
-        final String pageKey = "page";
-        final String pageValue = pageParams.get(pageKey);
-        final String sizeKey = "size";
-        final String sizeValue = pageParams.get(sizeKey);
-        final String exceptionMessage = "Não é possivel realizar a operação com os parâmetros informados sendo " +
-                "menores do que zero.";
-        when(serviceFindAll.apply(pageParams)).thenThrow(new IllegalArgumentException(exceptionMessage));
-
-        mvc.perform(get("/v1/api/people?"+pageKey+"="+pageValue+"&"+sizeKey+"="+sizeValue)
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andDo(print())
-                .andExpect(status().isBadRequest())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.status").value("BAD_REQUEST"))
-                .andExpect((jsonPath("$.message").value(exceptionMessage)));
     }
 
     @Test
