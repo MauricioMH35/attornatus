@@ -64,7 +64,7 @@ public class PersonController {
 
         PersonModel model = hateoasAssembler.toModel(founded);
         model = modelProcessorHyperMedia.process(model);
-        return null;
+        return ResponseEntity.ok(model);
     }
 
     @GetMapping(path = "/name/{name}", produces = "application/hal+json")
