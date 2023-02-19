@@ -24,6 +24,10 @@ public class PersonUtil {
                 .build();
     }
 
+    private static Page<Person> newSingleEntityInPage() {
+        return new PageImpl(List.of(newEntity()));
+    }
+
     public static List<Person> newPersonsInList() {
         return List.of(
                 Person.builder()
