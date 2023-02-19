@@ -11,7 +11,11 @@ public class PersonModelProcessorHyperMedia {
     private final DefaultPersonLinkHyperMedia linkHyperMedia;
 
     public PersonModel process(PersonModel model) {
-        // todo : implementar a adição dos links hyper media ao modelo
+        linkHyperMedia.addLinkUpdateById(model);
+        linkHyperMedia.addLinkDeleteById(model);
+        linkHyperMedia.addLinkFindMainAddressByPersonId(model);
+        linkHyperMedia.addLinkAddAddressByPersonId(model);
+        linkHyperMedia.addLinkFindAll(model);
         return model;
     }
 
