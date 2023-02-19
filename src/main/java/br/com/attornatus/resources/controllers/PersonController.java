@@ -9,6 +9,7 @@ import br.com.attornatus.resources.hateoas.processors.PersonSaveProcessorHyperMe
 import br.com.attornatus.resources.services.PersonServiceFindAll;
 import br.com.attornatus.resources.services.PersonServiceFindById;
 import br.com.attornatus.resources.services.PersonServiceSave;
+import br.com.attornatus.resources.services.impls.PersonServiceFindByNameContainsImpl;
 import br.com.attornatus.utils.LocalDateUtility;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -39,6 +40,7 @@ public class PersonController {
     @Qualifier("personServiceSaveImpl") private final PersonServiceSave serviceSave;
     @Qualifier("personServiceFindAllImpl") private final PersonServiceFindAll serviceFindAll;
     @Qualifier("personServiceFindByIdImpl") private final PersonServiceFindById serviceFindById;
+    @Qualifier("personServiceFindByNameContains") private final PersonServiceFindByNameContainsImpl serviceFindByNameContains;
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<PersonModel> save(@RequestBody Person person) {
@@ -69,10 +71,12 @@ public class PersonController {
 
     @GetMapping(path = "/name/{name}", produces = "application/hal+json")
     public ResponseEntity<CollectionModel<PersonModel>> findByNameContains(@PathVariable String name,
-                                                                           @RequestParam Map<String, String> params) {
-        Integer page = Integer.parseInt(params.get("page"));
-        Integer pageSize = Integer.parseInt(params.get("size"));
-        return null;
+                                                                           @RequestParam Map<String, String> pageParams) {
+        Page<Person> founded = serviceFindByNameContains.apply(name, pageParams);
+
+        CollectionModel<PersonModel> models = hateoasAssembler.toCollectionModel(founded.toList());
+        collectionProcessorHyperMedia.process(models);
+        return ResponseEntity.ok(models);
     }
 
     @GetMapping(path = "/birth/{birth}", produces = "application/hal+json")
