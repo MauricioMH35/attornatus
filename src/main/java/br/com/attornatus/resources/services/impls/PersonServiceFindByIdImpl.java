@@ -19,7 +19,10 @@ public class PersonServiceFindByIdImpl implements PersonServiceFindById {
     public Person apply(Long id) {
         throwsExceptionWhenEmptyId(id);
         throwsExceptionWhenIdLessThanOne(id);
-        return null;
+
+        Person founded = repository.findById(id).get();
+
+        return founded;
     }
 
     private void throwsExceptionWhenEmptyId(Long id) {
