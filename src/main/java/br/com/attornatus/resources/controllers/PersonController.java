@@ -67,4 +67,41 @@ public class PersonController {
         return null;
     }
 
+    @GetMapping(path = "/name/{name}", produces = "application/hal+json")
+    public ResponseEntity<CollectionModel<PersonModel>> findByNameContains(@PathVariable String name,
+                                                                           @RequestParam Map<String, String> params) {
+        Integer page = Integer.parseInt(params.get("page"));
+        Integer pageSize = Integer.parseInt(params.get("size"));
+        return null;
+    }
+
+    @GetMapping(path = "/birth/{birth}", produces = "application/hal+json")
+    public ResponseEntity<CollectionModel<PersonModel>> findByBirth(@PathVariable String birth,
+                                                                    @RequestParam Map<String, String> params) {
+        Integer page = Integer.parseInt(params.get("page"));
+        Integer pageSize = Integer.parseInt(params.get("size"));
+        LocalDate birthConverted = localDateUtil.parseLocalDate(birth);
+        return null;
+    }
+
+    @GetMapping(path = "/birth/between", produces = "application/hap+json")
+    public ResponseEntity<PersonModel> findByBirthBetween(@RequestParam Map<String, String> betweenParams,
+                                                          @RequestParam Map<String, String> pageParams) {
+        Integer page = Integer.parseInt(pageParams.get("page"));
+        Integer pageSize = Integer.parseInt(pageParams.get("size"));
+        LocalDate startBirth = localDateUtil.parseLocalDate(betweenParams.get("start"));
+        LocalDate endBirth = localDateUtil.parseLocalDate(betweenParams.get("end"));
+        return null;
+    }
+
+    @PutMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<PersonModel> updateById(@PathVariable Long id, @RequestBody Person person) {
+        return null;
+    }
+
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity<PersonModel> deleteById(@PathVariable Long id) {
+        return null;
+    }
+
 }
