@@ -7,6 +7,7 @@ import br.com.attornatus.resources.hateoas.processors.PersonCollectionProcessorH
 import br.com.attornatus.resources.hateoas.processors.PersonModelProcessorHyperMedia;
 import br.com.attornatus.resources.hateoas.processors.PersonSaveProcessorHyperMedia;
 import br.com.attornatus.resources.services.PersonServiceFindAll;
+import br.com.attornatus.resources.services.PersonServiceFindById;
 import br.com.attornatus.resources.services.PersonServiceSave;
 import br.com.attornatus.utils.LocalDateUtility;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +38,7 @@ public class PersonController {
 
     @Qualifier("personServiceSaveImpl") private final PersonServiceSave serviceSave;
     @Qualifier("personServiceFindAllImpl") private final PersonServiceFindAll serviceFindAll;
+    @Qualifier("personServiceFindByIdImpl") private final PersonServiceFindById serviceFindById;
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<PersonModel> save(@RequestBody Person person) {
@@ -54,6 +56,15 @@ public class PersonController {
         CollectionModel<PersonModel> models = hateoasAssembler.toCollectionModel(founded.toList());
         collectionProcessorHyperMedia.process(models);
         return ResponseEntity.ok(models);
+    }
+
+    @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<PersonModel> findById(@PathVariable Long id) {
+        Person founded = serviceFindById.apply(id);
+
+        PersonModel model = hateoasAssembler.toModel(founded);
+        model = modelProcessorHyperMedia.process(model);
+        return null;
     }
 
 }
