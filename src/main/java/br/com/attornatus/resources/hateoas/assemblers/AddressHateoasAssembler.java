@@ -12,20 +12,13 @@ import java.util.List;
 
 public class AddressHateoasAssembler extends RepresentationModelAssemblerSupport<Address, AddressModel> {
 
-    private RepresentationModelProcessor<AddressModel> processor;
-
     public AddressHateoasAssembler() {
         super(AddressController.class, AddressModel.class);
     }
 
-    public void add(RepresentationModelProcessor<AddressModel> processor) {
-        this.processor = processor;
-    }
-
     @Override
     public AddressModel toModel(Address entity) {
-        AddressModel responseModel = AddressModel.toModel(entity);
-        return processor.process(responseModel);
+        return AddressModel.toModel(entity);
     }
 
     @Override
