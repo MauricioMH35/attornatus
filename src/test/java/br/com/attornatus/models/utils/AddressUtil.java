@@ -10,6 +10,28 @@ import java.util.List;
 
 public class AddressUtil {
 
+    public static Address newAddress() {
+        return Address.builder()
+                .relevanceLevel(AddressRelevanceLevel.MEDIUM)
+                .publicPlace("Rua Pedralva")
+                .zipCode("54480430")
+                .number(554)
+                .city("Jaboatão dos Guararapes")
+                .build();
+    }
+
+    public static Address newAddressWithId() {
+        return Address.builder()
+                .id(1l)
+                .relevanceLevel(AddressRelevanceLevel.MEDIUM)
+                .publicPlace("Rua Pedralva")
+                .zipCode("54480430")
+                .number(554)
+                .city("Jaboatão dos Guararapes")
+                .person(PersonUtil.newEntity())
+                .build();
+    }
+
     public static Address newAddressByRelevanceLevel(AddressRelevanceLevel relevanceLevel) {
         return Address.builder()
                 .id(1l)
