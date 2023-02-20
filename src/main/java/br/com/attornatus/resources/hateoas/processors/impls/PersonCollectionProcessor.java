@@ -1,16 +1,16 @@
-package br.com.attornatus.resources.hateoas.processors;
+package br.com.attornatus.resources.hateoas.processors.impls;
 
-import br.com.attornatus.models.entities.Person;
 import br.com.attornatus.resources.hateoas.models.PersonModel;
+import br.com.attornatus.resources.hateoas.processors.impls.DefaultPersonProcessor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class PersonCollectionProcessorHyperMedia {
+public class PersonCollectionProcessor {
 
-    private final DefaultPersonLinkHyperMedia linkHyperMedia;
+    private final DefaultPersonProcessor linkHyperMedia;
 
     public CollectionModel<PersonModel> process(CollectionModel<PersonModel> models) {
         linkHyperMedia.addLinkSave(models);
