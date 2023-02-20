@@ -41,18 +41,25 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public Page<Person> findByNameContains(String name, Map<String, String> pageParams) {
+    public Page<Person> findByNameContains(String name,
+                                           Map<String, String> pageParams
+    ) {
         return findByNameContains.apply(name, pageParams);
     }
 
     @Override
-    public Page<Person> findByBirth(String birth, Map<String, String> pageParams) {
+    public Page<Person> findByBirth(String birth,
+                                    Map<String, String> pageParams
+    ) {
         return findByBirth.apply(birth, pageParams);
     }
 
     @Override
-    public Page<Person> findByBirthBetween(Map<String, String> betweenParams, Map<String, String> pageParams) {
-        return findByBirthBetween.apply(betweenParams, pageParams);
+    public Page<Person> findByBirthBetween(String start,
+                                           String end,
+                                           Map<String, String> pageParams
+    ) {
+        return findByBirthBetween.apply(start, end, pageParams);
     }
 
     @Override
