@@ -166,7 +166,8 @@ public class DefaultPersonLinkHyperMedia {
     public void addLinkFindByBirthBetween(PersonModel model) {
         Link link = linkTo(methodOn(PersonController.class)
                 .findByBirthBetween(
-                        Map.of("start", model.getContent().getBirth().toString(), "end", "2023-01-01"),
+                        model.getContent().getBirth().toString(),
+                        "2023-01-01",
                         Map.of("page", "0", "size", "10")))
                 .withRel(IanaLinkRelations.EDIT)
                 .withType("application/json;method=POST;charset=UTF-8")
@@ -180,7 +181,7 @@ public class DefaultPersonLinkHyperMedia {
     public void addLinkFindByBirthBetween(CollectionModel<PersonModel> models) {
         Link link = linkTo(methodOn(PersonController.class)
                 .findByBirthBetween(
-                        Map.of("start", "1990-01-01", "end", "2023-01-01"),
+                        "1990-01-01","2023-01-01",
                         Map.of("page", "0", "size", "10")))
                 .withRel(IanaLinkRelations.EDIT)
                 .withType("application/json;method=POST;charset=UTF-8")
