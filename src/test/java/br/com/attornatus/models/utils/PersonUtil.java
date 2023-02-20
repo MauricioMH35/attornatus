@@ -9,6 +9,21 @@ import java.util.List;
 
 public class PersonUtil {
 
+    public static Person newEntityByBirthWithId(LocalDate newBirth) {
+        return Person.builder()
+                .id(1l)
+                .name("Flavia Matos")
+                .birth(newBirth)
+                .build();
+    }
+
+    public static Person newEntityByBirth(LocalDate newBirth) {
+        return Person.builder()
+                .name("Flavia Matos")
+                .birth(newBirth)
+                .build();
+    }
+
     public static Person newFormEntity() {
         return Person.builder()
                 .name("Flavia Matos")
