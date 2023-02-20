@@ -21,7 +21,7 @@ public interface PersonService {
 
     Page<Person> findByBirthBetween(String start, String end, Map<String, String> pageParams);
 
-    Boolean updateById(Long id, Person person);
+    Person updateById(Long id, Person person);
 
     Boolean deleteById(Long id);
 

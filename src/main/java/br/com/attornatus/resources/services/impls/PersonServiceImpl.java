@@ -63,7 +63,7 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public Boolean updateById(Long id, Person person) {
+    public Person updateById(Long id, Person person) {
         return updateById.apply(id, person);
     }
 

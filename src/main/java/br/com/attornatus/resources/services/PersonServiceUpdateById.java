@@ -6,6 +6,6 @@ import org.springframework.stereotype.Service;
 @Service
 public interface PersonServiceUpdateById {
 
-    Boolean apply(Long id, Person person);
+    Person apply(Long id, Person person);
 
 }

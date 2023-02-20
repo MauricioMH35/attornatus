@@ -16,7 +16,7 @@ public class PersonServiceUpdateByIdImpl implements PersonServiceUpdateById {
     private final PersonRepository repository;
 
     @Override
-    public Boolean apply(Long id, Person person) {
+    public Person apply(Long id, Person person) {
         return null;
     }
 
