@@ -13,14 +13,14 @@ public class PersonCollectionProcessorHyperMedia {
     private final DefaultPersonLinkHyperMedia linkHyperMedia;
 
     public CollectionModel<PersonModel> process(CollectionModel<PersonModel> models) {
+        linkHyperMedia.addLinkSave(models);
+        linkHyperMedia.addLinkFindByBirth(models);
+        linkHyperMedia.addLinkFindByBirthBetween(models);
+
         for (PersonModel model : models) {
             linkHyperMedia.addLinkFindById(model);
             linkHyperMedia.addLinkFindMainAddressByPersonId(model);
         }
-
-        linkHyperMedia.addLinkSave(models);
-        linkHyperMedia.addLinkFindByBirth(models);
-        linkHyperMedia.addLinkFindByBirthBetween(models);
 
         return models;
     }
