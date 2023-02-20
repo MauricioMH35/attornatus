@@ -1,7 +1,6 @@
 package br.com.attornatus.resources.controllers;
 
 import br.com.attornatus.exceptions.NotFoundException;
-import br.com.attornatus.models.entities.Person;
 import br.com.attornatus.models.utils.PersonUtil;
 import br.com.attornatus.resources.services.impls.PersonServiceFindByBirthBetweenImpl;
 import org.junit.jupiter.api.DisplayName;
@@ -11,14 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
