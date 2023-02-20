@@ -82,9 +82,8 @@ public class DefaultPersonProcessor {
 
     public void addLinkAddAddressByPersonId(PersonModel model) {
         Long personId = model.getContent().getId();
-        Link link = linkTo(
-                methodOn(AddressController.class).save(model.getContent().getId(), null)
-        )
+        Link link = linkTo(methodOn(AddressController.class)
+                .save(null))
                 .withRel(IanaLinkRelations.EDIT)
                 .withType("application/json;method=POST;charset=UTF-8")
                 .withTitle("Add Address")

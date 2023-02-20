@@ -20,9 +20,9 @@ public class AddressController {
     private final AddressService service;
     private final AddressProcessor processorHyperMedia;
 
-    @PostMapping("/person/{personId}")
-    public ResponseEntity<AddressModel> save(@PathVariable Long personId, @RequestBody Address address) {
-        Address saved = service.save(personId, address);
+    @PostMapping
+    public ResponseEntity<AddressModel> save(@RequestBody Address address) {
+        Address saved = service.save(address);
         AddressModel model = processorHyperMedia.save(saved);
         return ResponseEntity.ok(model);
     }
