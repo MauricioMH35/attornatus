@@ -17,6 +17,7 @@ public class AddressUtil {
                 .zipCode("54480430")
                 .number(554)
                 .city("Jaboatão dos Guararapes")
+                .person(Person.builder().id(1l).build())
                 .build();
     }
 
@@ -33,6 +34,17 @@ public class AddressUtil {
     }
 
     public static Address newAddressByRelevanceLevel(AddressRelevanceLevel relevanceLevel) {
+        return Address.builder()
+                .relevanceLevel(relevanceLevel)
+                .publicPlace("Rua Pedralva")
+                .zipCode("54480430")
+                .number(554)
+                .city("Jaboatão dos Guararapes")
+                .person(PersonUtil.newEntity())
+                .build();
+    }
+
+    public static Address newAddressByRelevanceLevelWithId(AddressRelevanceLevel relevanceLevel) {
         return Address.builder()
                 .id(1l)
                 .relevanceLevel(relevanceLevel)
