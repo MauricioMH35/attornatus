@@ -17,7 +17,7 @@ public class DefaultAddressProcessor {
     public void addLinkSave(AddressModel model) {
         Long personId = model.getContent().getPerson().getId();
         Link link = linkTo(methodOn(AddressController.class)
-                .save(personId, null))
+                .save(null))
                 .withRel(IanaLinkRelations.EDIT)
                 .withType("application/json;method=POST;charset=UTF-8")
                 .withTitle("Save")
