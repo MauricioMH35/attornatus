@@ -14,7 +14,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Component
-public class DefaultPersonLinkHyperMedia {
+public class DefaultPersonProcessor {
 
     public void addLinkSave(PersonModel model) {
         Link link = linkTo(methodOn(PersonController.class)
