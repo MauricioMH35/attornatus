@@ -1,4 +1,4 @@
-package br.com.attornatus.resources.hateoas.processors;
+package br.com.attornatus.resources.hateoas.processors.impls;
 
 import br.com.attornatus.resources.controllers.AddressController;
 import br.com.attornatus.resources.controllers.PersonController;
