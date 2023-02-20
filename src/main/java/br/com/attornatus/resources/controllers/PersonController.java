@@ -36,69 +36,79 @@ public class PersonController {
     private final PersonService service;
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<PersonModel> save(@RequestBody Person person) {
+    public ResponseEntity<PersonModel> save(@RequestBody Person person
+    ) {
         Person saved = service.save(person);
-
         PersonModel model = hateoasAssembler.toModel(saved);
         model = saveProcessorHyperMedia.process(model);
+
         return ResponseEntity.ok(model);
     }
 
     @GetMapping(produces = "application/hal+json")
-    public ResponseEntity<CollectionModel<PersonModel>> findAll(@RequestParam Map<String, String> pageParams) {
+    public ResponseEntity<CollectionModel<PersonModel>> findAll(@RequestParam Map<String, String> pageParams
+    ) {
         Page<Person> founded = service.findAll(pageParams);
-
         CollectionModel<PersonModel> models = hateoasAssembler.toCollectionModel(founded.toList());
         collectionProcessorHyperMedia.process(models);
+
         return ResponseEntity.ok(models);
     }
 
     @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<PersonModel> findById(@PathVariable Long id) {
+    public ResponseEntity<PersonModel> findById(@PathVariable Long id
+    ) {
         Person founded = service.findById(id);
-
         PersonModel model = hateoasAssembler.toModel(founded);
         model = modelProcessorHyperMedia.process(model);
+
         return ResponseEntity.ok(model);
     }
 
     @GetMapping(path = "/name/{name}", produces = "application/hal+json")
     public ResponseEntity<CollectionModel<PersonModel>> findByNameContains(@PathVariable String name,
-                                                                           @RequestParam Map<String, String> pageParams) {
+                                                                           @RequestParam Map<String, String> pageParams
+    ) {
         Page<Person> founded = service.findByNameContains(name, pageParams);
-
         CollectionModel<PersonModel> models = hateoasAssembler.toCollectionModel(founded.toList());
         collectionProcessorHyperMedia.process(models);
+
         return ResponseEntity.ok(models);
     }
 
     @GetMapping(path = "/birth/{birth}", produces = "application/hal+json")
     public ResponseEntity<CollectionModel<PersonModel>> findByBirth(@PathVariable String birth,
-                                                                    @RequestParam Map<String, String> pageParams) {
+                                                                    @RequestParam Map<String, String> pageParams
+    ) {
         Page<Person> founded = service.findByBirth(birth, pageParams);
-
         CollectionModel<PersonModel> models = hateoasAssembler.toCollectionModel(founded.toList());
         collectionProcessorHyperMedia.process(models);
+
         return ResponseEntity.ok(models);
     }
 
-    @GetMapping(path = "/birth/between", produces = "application/hap+json")
-    public ResponseEntity<PersonModel> findByBirthBetween(@RequestParam Map<String, String> betweenParams,
-                                                          @RequestParam Map<String, String> pageParams) {
-        Integer page = Integer.parseInt(pageParams.get("page"));
-        Integer pageSize = Integer.parseInt(pageParams.get("size"));
-        LocalDate startBirth = localDateUtil.parseLocalDate(betweenParams.get("start"));
-        LocalDate endBirth = localDateUtil.parseLocalDate(betweenParams.get("end"));
-        return null;
+    @GetMapping(path = "/birth/between/{start}/{end}", produces = "application/hap+json")
+    public ResponseEntity<CollectionModel<PersonModel>> findByBirthBetween(@PathVariable String start,
+                                                                           @PathVariable String end,
+                                                                           @RequestParam Map<String, String> pageParams
+    ) {
+        Page<Person> founded = service.findByBirthBetween(start, end, pageParams);
+        CollectionModel<PersonModel> models = hateoasAssembler.toCollectionModel(founded.toList());
+        collectionProcessorHyperMedia.process(models);
+
+        return ResponseEntity.ok(models);
     }
 
     @PutMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<PersonModel> updateById(@PathVariable Long id, @RequestBody Person person) {
+    public ResponseEntity<PersonModel> updateById(@PathVariable Long id,
+                                                  @RequestBody Person person
+    ) {
         return null;
     }
 
     @DeleteMapping(path = "/{id}")
-    public ResponseEntity<PersonModel> deleteById(@PathVariable Long id) {
+    public ResponseEntity<PersonModel> deleteById(@PathVariable Long id
+    ) {
         return null;
     }
 
