@@ -20,7 +20,7 @@ public class AddressController {
     private final AddressService service;
     private final AddressProcessor processorHyperMedia;
 
-    @PostMapping("/{personId}")
+    @PostMapping("/person/{personId}")
     public ResponseEntity<AddressModel> save(@PathVariable Long personId, @RequestBody Address address) {
         Address saved = service.save(personId, address);
         AddressModel model = processorHyperMedia.save(saved);
@@ -34,14 +34,14 @@ public class AddressController {
         return ResponseEntity.ok(model);
     }
 
-    @GetMapping("/person/{personId}")
+    @GetMapping("/main/person/{personId}")
     public ResponseEntity<AddressModel> findMainAddressByPersonId(@PathVariable Long personId) {
         Address founded = service.findMainAddressByPersonId(personId);
         AddressModel model = processorHyperMedia.findMainAddressByPersonId(founded);
         return ResponseEntity.ok(model);
     }
 
-    @GetMapping("/persons/{personId}")
+    @GetMapping("/person/{personId}")
     public ResponseEntity<CollectionModel<AddressModel>> findAllByPersonId(@PathVariable Long personId,
                                                                            @RequestParam Map<String, String> pageParams) {
         Page<Address> founded = service.findAllByPersonId(personId, pageParams);
