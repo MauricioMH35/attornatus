@@ -19,7 +19,7 @@ public interface PersonService {
 
     Page<Person> findByBirth(String birth, Map<String, String> pageParams);
 
-    Page<Person> findByBirthBetween(Map<String, String> betweenParams, Map<String, String> pageParams);
+    Page<Person> findByBirthBetween(String start, String end, Map<String, String> pageParams);
 
     Boolean updateById(Long id, Person person);
 
