@@ -101,8 +101,7 @@ public class DefaultPersonLinkHyperMedia {
                 .withRel(IanaLinkRelations.ABOUT)
                 .withType("application/json;method=POST;charset=UTF-8")
                 .withTitle("Find Main Address")
-                .withName("find-main-address")
-                .withDeprecation("Find main address by person id (" + personId + ")");
+                .withName("find-main-address");
 
         model.add(link);
     }
@@ -114,8 +113,7 @@ public class DefaultPersonLinkHyperMedia {
                 .withRel(IanaLinkRelations.ABOUT)
                 .withType("application/json;method=POST;charset=UTF-8")
                 .withTitle("Find All Addresses")
-                .withName("find-all-addresses")
-                .withDeprecation("Find all addresses by person id (" + personId + ")");
+                .withName("find-all-addresses");
 
         model.add(link);
     }
@@ -129,8 +127,7 @@ public class DefaultPersonLinkHyperMedia {
                 .withRel(IanaLinkRelations.COLLECTION)
                 .withType("application/json;method=GET;charset=UTF-8")
                 .withTitle("Find All")
-                .withName("find-all")
-                .withDeprecation("Find all persons indicating page number and its size");
+                .withName("find-all");
 
         model.add(link);
     }
@@ -143,8 +140,7 @@ public class DefaultPersonLinkHyperMedia {
                 .withRel(IanaLinkRelations.EDIT)
                 .withType("application/json;method=POST;charset=UTF-8")
                 .withTitle("Find By Birth")
-                .withName("find-by-birth")
-                .withDeprecation("Find persons by birth 1990-01-01");
+                .withName("find-by-birth");
 
         model.add(link);
     }
@@ -157,8 +153,7 @@ public class DefaultPersonLinkHyperMedia {
                 .withRel(IanaLinkRelations.EDIT)
                 .withType("application/json;method=POST;charset=UTF-8")
                 .withTitle("Find By Birth")
-                .withName("find-by-birth")
-                .withDeprecation("Find persons by birth 1990-01-01");
+                .withName("find-by-birth");
 
         models.add(link);
     }
@@ -172,8 +167,7 @@ public class DefaultPersonLinkHyperMedia {
                 .withRel(IanaLinkRelations.EDIT)
                 .withType("application/json;method=POST;charset=UTF-8")
                 .withTitle("Find By Birth")
-                .withName("find-by-birth")
-                .withDeprecation("Find persons by birth 1990-01-01");
+                .withName("find-by-birth");
 
         model.add(link);
     }
@@ -186,8 +180,7 @@ public class DefaultPersonLinkHyperMedia {
                 .withRel(IanaLinkRelations.EDIT)
                 .withType("application/json;method=POST;charset=UTF-8")
                 .withTitle("Find By Birth")
-                .withName("find-by-birth")
-                .withDeprecation("Find persons by birth 1990-01-01");
+                .withName("find-by-birth");
 
         models.add(link);
     }
