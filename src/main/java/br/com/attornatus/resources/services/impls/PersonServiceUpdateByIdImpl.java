@@ -60,8 +60,7 @@ public class PersonServiceUpdateByIdImpl implements PersonServiceUpdateById {
     private LocalDate updateBirth(LocalDate founded, LocalDate updated) {
         return founded.equals(updated) ? founded : updated;
     }
-
-
+    
     private Person findByid(Long id) {
         idServiceUtil.validIdentity(id);
         Optional<Person> founded = repository.findById(id);
