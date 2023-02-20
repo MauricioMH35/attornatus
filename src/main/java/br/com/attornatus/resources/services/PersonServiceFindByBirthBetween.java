@@ -9,6 +9,6 @@ import java.util.Map;
 @Service
 public interface PersonServiceFindByBirthBetween {
 
-    Page<Person> apply(Map<String, String> betweenParams, Map<String, String> pageParams);
+    Page<Person> apply(String start, String end, Map<String, String> pageParams);
 
 }
