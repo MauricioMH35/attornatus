@@ -2,7 +2,7 @@
     <a href="https://www.attornatus.com.br/" target="_blank">
         <img 
             src="https://raw.githubusercontent.com/MauricioMH35/Assets/7d7f9d0f0198052b753ad582420a67ec98de47f1/Attornatus/attornatus_logo.svg" 
-            width="128" 
+            width="256" 
             alt="Attornatus Logo" />
     </a>
 </p>
