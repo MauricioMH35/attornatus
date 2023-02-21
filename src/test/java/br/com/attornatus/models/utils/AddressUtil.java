@@ -56,6 +56,10 @@ public class AddressUtil {
                 .build();
     }
 
+    public static Page<Address> newAddressByPersonInPage() {
+        return new PageImpl<>(List.of(newAddress()));
+    }
+
     public static List<Address> newAddressesByPeople(Person people) {
         return List.of(
                 Address.builder()
