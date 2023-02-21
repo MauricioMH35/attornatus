@@ -61,5 +61,5 @@ class AddressServiceFindMainByPersonIdImplTest {
                 .isInstanceOf(NotFoundException.class)
                 .hasMessageContaining(exceptionMessage);
     }
-    
+
 }
