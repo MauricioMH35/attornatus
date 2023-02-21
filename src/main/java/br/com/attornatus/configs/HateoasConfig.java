@@ -2,7 +2,6 @@ package br.com.attornatus.configs;
 
 import br.com.attornatus.resources.hateoas.assemblers.AddressHateoasAssembler;
 import br.com.attornatus.resources.hateoas.assemblers.PersonHateoasAssembler;
-import br.com.attornatus.resources.hateoas.processors.DefaultPersonLinkHyperMedia;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
